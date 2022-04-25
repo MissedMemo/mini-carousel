@@ -29,6 +29,7 @@ const Carousel = styled.div`
   position: relative;
   overflow: hidden;
   border: 1px solid lightblue;
+  border-radius: 24px;
 `;
 
 const Thumbnails = styled.div`
@@ -37,5 +38,6 @@ const Thumbnails = styled.div`
 `;
 
 const Image = styled("img")`
-  height: 100px;
+  height: 164px;
+  width: 194px;
 `;

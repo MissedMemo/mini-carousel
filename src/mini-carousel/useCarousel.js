@@ -10,7 +10,7 @@ export const useCarousel = (imageUrls) => {
     if (el) {
       refCarousel.current = el;
       refCarousel.current = el;
-      const n = Math.floor(refCarousel.current.clientWidth / 100);
+      const n = Math.floor(refCarousel.current.clientWidth / 194);
       if (numVisible !== n) {
         setNumVisible(n);
       }
