@@ -1,0 +1,12 @@
+build/
+coverage/
+dist/
+node_modules/
+
+.build
+.DS_Store
+.vscode
+.serverless
+
+*.log*
+*.temp
