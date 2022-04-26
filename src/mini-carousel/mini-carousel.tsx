@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
 
-const imageWidth = 194;
+const imageWidth = 200;
 const imageHeight = 164;
 const imageGap = 2;
 
@@ -15,7 +15,6 @@ const MiniCarousel = ({ imageUrls, clickHandler }: CarouselProps) => {
   const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, calcWidth, transformAnimation } = useCarousel({
     numImages: imageUrls.length,
     imageWidth,
-    imageHeight,
     imageGap
   });
 

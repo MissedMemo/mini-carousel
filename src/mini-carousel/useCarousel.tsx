@@ -1,14 +1,13 @@
 import { useState, useRef } from "react";
 
-export type CarouselHookProps = {
+type Props = {
   numImages: number;
   imageWidth: number;
-  imageHeight: number;
   imageGap: number;
 };
 
 // prettier-ignore
-export const useCarousel = ({ numImages, imageWidth, imageHeight, imageGap}: CarouselHookProps) => {
+export const useCarousel = ({ numImages, imageWidth, imageGap}: Props) => {
   const [offsetX, setOffsetX] = useState(0);
   const [clientWidth, setClientWidth] = useState(0);
   const refCarousel = useRef<HTMLDivElement | null>(null);
@@ -22,8 +21,8 @@ export const useCarousel = ({ numImages, imageWidth, imageHeight, imageGap}: Car
     }
   };
 
-  const imagePanelWidth = numImages * imageWidth;
-  const scrollAmount = clientWidth;
+  const imagePanelWidth = numImages * imageWidth + (numImages -1) * imageGap;
+  const scrollAmount = clientWidth - imageWidth * 0.33; // maintain some of previous view (shows no images "skipped")
   const maxOffset = -1 * (imagePanelWidth - clientWidth);
 
   const canScrollLeft = offsetX < 0;
