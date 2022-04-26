@@ -4,14 +4,14 @@ import ScrollButton from "./scroll-button";
 
 const MiniCarousel = ({ imageUrls, clickHandler }) => {
   // prettier-ignore
-  const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, visibleImages, calcWidth } = useCarousel(imageUrls);
+  const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, visibleImages, calcWidth, slideProps } = useCarousel(imageUrls);
 
   return (
     <Carousel ref={calcWidth}>
       {canScrollLeft && <ScrollButton clickHandler={scrollLeft} isLeftButton />}
 
-      <Thumbnails>
-        {visibleImages.map((url) => (
+      <Thumbnails {...slideProps}>
+        {imageUrls.map((url) => (
           <Image key={url} src={url} onClick={() => clickHandler(url)} />
         ))}
       </Thumbnails>
@@ -33,6 +33,7 @@ const Carousel = styled.div`
 `;
 
 const Thumbnails = styled.div`
+  transition: transform 300ms ease 100ms;
   display: flex;
   gap: 2px;
 `;

@@ -1,45 +1,42 @@
 import { useState, useRef } from "react";
 
 export const useCarousel = (imageUrls) => {
-  const [leftmostIndex, setLeftmostIndex] = useState(0);
-  const [numVisible, setNumVisible] = useState(5);
+  const [offsetX, setOffsetX] = useState(0);
 
   const refCarousel = useRef();
 
   const calcWidth = (el) => {
     if (el) {
       refCarousel.current = el;
-      refCarousel.current = el;
-      const n = Math.floor(refCarousel.current.clientWidth / 194);
-      if (numVisible !== n) {
-        setNumVisible(n);
-      }
     }
   };
 
-  const canScrollLeft = leftmostIndex > 0;
-  const canScrollRight = leftmostIndex < imageUrls.length - numVisible;
+  const slideProps = {
+    style: { transform: `translate3d(${offsetX}px, 0, 0)` },
+  };
+
+  const canScrollLeft = offsetX < 0;
+  const canScrollRight = true; //leftmostIndex < imageUrls.length - numVisible;
+  console.log({ offsetX });
 
   const scrollLeft = () => {
     if (canScrollLeft) {
-      setLeftmostIndex((i) => i - 1);
+      setOffsetX((x) => x + 600);
     }
   };
 
   const scrollRight = () => {
     if (canScrollRight) {
-      setLeftmostIndex((i) => i + 1);
+      setOffsetX((x) => x - 600);
     }
   };
-
-  const visibleImages = imageUrls.filter((_, i) => i >= leftmostIndex);
 
   return {
     canScrollLeft,
     scrollLeft,
     canScrollRight,
     scrollRight,
-    visibleImages,
     calcWidth,
+    slideProps,
   };
 };
