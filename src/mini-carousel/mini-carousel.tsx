@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
 
-const imageWidth = 200;
+const imageWidth = 194;
 const imageHeight = 164;
 const imageGap = 2;
 
