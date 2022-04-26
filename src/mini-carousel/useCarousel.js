@@ -17,22 +17,12 @@ export const useCarousel = (imageUrls) => {
     }
   };
 
-  const totalWidth = imageUrls.length * imageWidth;
+  const imagePanelWidth = imageUrls.length * imageWidth;
   const scrollAmount = clientWidth;
-  const maxOffset = totalWidth - clientWidth;
+  const maxOffset = -1 * (imagePanelWidth - clientWidth);
 
   const canScrollLeft = offsetX < 0;
-  const canScrollRight = offsetX > -maxOffset;
-
-  console.log(
-    { offsetX },
-    { totalWidth },
-    { clientWidth },
-    { scrollAmount },
-    { maxOffset },
-    { canScrollLeft },
-    { canScrollRight }
-  );
+  const canScrollRight = offsetX > maxOffset;
 
   const scrollLeft = () => {
     if (canScrollLeft) {
@@ -42,7 +32,7 @@ export const useCarousel = (imageUrls) => {
 
   const scrollRight = () => {
     if (canScrollRight) {
-      setOffsetX((x) => Math.max(x - scrollAmount, -maxOffset));
+      setOffsetX((x) => Math.max(x - scrollAmount, maxOffset));
     }
   };
 
