@@ -1,14 +1,17 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
-import ScrollButton from "./scroll-button";
 
 const MiniCarousel = ({ imageUrls, clickHandler }) => {
   // prettier-ignore
-  const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, visibleImages, calcWidth, slideProps } = useCarousel(imageUrls);
+  const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, calcWidth, slideProps } = useCarousel(imageUrls);
 
   return (
     <Carousel ref={calcWidth}>
-      {canScrollLeft && <ScrollButton clickHandler={scrollLeft} isLeftButton />}
+      {canScrollLeft && (
+        <ScrollButton direction="left" onClick={scrollLeft}>
+          {"<"}
+        </ScrollButton>
+      )}
 
       <Thumbnails {...slideProps}>
         {imageUrls.map((url) => (
@@ -16,7 +19,11 @@ const MiniCarousel = ({ imageUrls, clickHandler }) => {
         ))}
       </Thumbnails>
 
-      {canScrollRight && <ScrollButton clickHandler={scrollRight} />}
+      {canScrollRight && (
+        <ScrollButton direction="right" onClick={scrollRight}>
+          {">"}
+        </ScrollButton>
+      )}
     </Carousel>
   );
 };
@@ -39,6 +46,23 @@ const Thumbnails = styled.div`
 `;
 
 const Image = styled("img")`
-  height: 164px;
-  width: 194px;
+  height: 100px;
+  width: 100px;
 `;
+
+const ScrollButton = styled.button(
+  ({ direction }) => `
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: ${direction === "left" ? 0 : null};
+    right: ${direction === "right" ? 0 : null};
+    width: 40px;
+    background-color: black;
+    opacity: 45%;
+    color: white;
+    border: none;
+    font-size: 32px;
+  `
+);
