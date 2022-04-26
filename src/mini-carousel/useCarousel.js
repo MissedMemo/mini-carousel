@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-const imageWidth = 100;
+const imageWidth = 194;
 
 export const useCarousel = (imageUrls) => {
   const [offsetX, setOffsetX] = useState(0);
@@ -11,7 +11,9 @@ export const useCarousel = (imageUrls) => {
   const calcWidth = (el) => {
     if (el) {
       refCarousel.current = el;
-      setClientWidth(refCarousel.current.clientWidth);
+      if (refCarousel.current.clientWidth !== clientWidth) {
+        setClientWidth(refCarousel.current.clientWidth);
+      }
     }
   };
 
@@ -34,20 +36,13 @@ export const useCarousel = (imageUrls) => {
 
   const scrollLeft = () => {
     if (canScrollLeft) {
-      setOffsetX((x) => x + scrollAmount);
+      setOffsetX((x) => Math.min(x + scrollAmount, 0));
     }
   };
 
   const scrollRight = () => {
     if (canScrollRight) {
-      setOffsetX((x) => {
-        const offset =
-          Math.abs(x - scrollAmount) > maxOffset
-            ? -maxOffset
-            : x - scrollAmount;
-        console.log({ offset });
-        return offset;
-      });
+      setOffsetX((x) => Math.max(x - scrollAmount, -maxOffset));
     }
   };
 
@@ -57,7 +52,7 @@ export const useCarousel = (imageUrls) => {
     canScrollRight,
     scrollRight,
     calcWidth,
-    slideProps: {
+    transformAnimation: {
       style: { transform: `translate3d(${offsetX}px, 0, 0)` },
     },
   };
