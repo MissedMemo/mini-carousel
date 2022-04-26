@@ -1,14 +1,19 @@
 import { useState, useRef } from "react";
 
-const imageWidth = 194;
+export type CarouselHookProps = {
+  numImages: number;
+  imageWidth: number;
+  imageHeight: number;
+  imageGap: number;
+};
 
-export const useCarousel = (imageUrls) => {
+// prettier-ignore
+export const useCarousel = ({ numImages, imageWidth, imageHeight, imageGap}: CarouselHookProps) => {
   const [offsetX, setOffsetX] = useState(0);
   const [clientWidth, setClientWidth] = useState(0);
+  const refCarousel = useRef<HTMLDivElement | null>(null);
 
-  const refCarousel = useRef();
-
-  const calcWidth = (el) => {
+  const calcWidth = (el: HTMLDivElement) => {
     if (el) {
       refCarousel.current = el;
       if (refCarousel.current.clientWidth !== clientWidth) {
@@ -17,7 +22,7 @@ export const useCarousel = (imageUrls) => {
     }
   };
 
-  const imagePanelWidth = imageUrls.length * imageWidth;
+  const imagePanelWidth = numImages * imageWidth;
   const scrollAmount = clientWidth;
   const maxOffset = -1 * (imagePanelWidth - clientWidth);
 

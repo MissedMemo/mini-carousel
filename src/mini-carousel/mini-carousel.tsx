@@ -1,9 +1,23 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
 
-const MiniCarousel = ({ imageUrls, clickHandler }) => {
+const imageWidth = 194;
+const imageHeight = 164;
+const imageGap = 2;
+
+type CarouselProps = {
+  imageUrls: string[];
+  clickHandler: (url: string) => void;
+};
+
+const MiniCarousel = ({ imageUrls, clickHandler }: CarouselProps) => {
   // prettier-ignore
-  const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, calcWidth, transformAnimation } = useCarousel(imageUrls);
+  const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, calcWidth, transformAnimation } = useCarousel({
+    numImages: imageUrls.length,
+    imageWidth,
+    imageHeight,
+    imageGap
+  });
 
   return (
     <Carousel ref={calcWidth}>
@@ -42,17 +56,18 @@ const Carousel = styled.div`
 const Thumbnails = styled.div`
   transition: transform 300ms ease 100ms;
   display: flex;
-  gap: 2px;
+  gap: ${imageGap}px;
 `;
 
+// flex-shrink required for images in flex container not to be square!
 const Image = styled("img")`
-  width: 194px;
-  height: 164px;
+  width: ${imageWidth}px;
+  height: ${imageHeight}px;
   flex-shrink: 0;
 `;
 
 const ScrollButton = styled.button(
-  ({ direction }) => `
+  ({ direction }: { direction: string }) => `
     z-index: 1000;
     position: absolute;
     top: 0;
