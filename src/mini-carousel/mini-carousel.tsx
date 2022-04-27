@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
+import { ReactComponent as RightArrow } from "../assets/arrow-right.svg";
 
 const imageUrl = (s: TemplateStringsArray, id: string) =>
   `https://picsum.photos/id/${id}/500`;
@@ -38,7 +39,7 @@ const MiniCarousel = ({ imageIds, clickHandler }: CarouselProps) => {
 
       {canScrollRight && (
         <ScrollButton direction="right" onClick={scrollRight}>
-          {">"}
+          <RightArrow />
         </ScrollButton>
       )}
     </Carousel>
