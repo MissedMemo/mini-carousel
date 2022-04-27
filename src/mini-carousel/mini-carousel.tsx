@@ -1,19 +1,22 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
 
+const imageUrl = (s: TemplateStringsArray, id: string) =>
+  `https://picsum.photos/id/${id}/500`;
+
 const imageWidth = 194;
 const imageHeight = 164;
 const imageGap = 2;
 
 type CarouselProps = {
-  imageUrls: string[];
+  imageIds: string[];
   clickHandler: (url: string) => void;
 };
 
-const MiniCarousel = ({ imageUrls, clickHandler }: CarouselProps) => {
+const MiniCarousel = ({ imageIds, clickHandler }: CarouselProps) => {
   // prettier-ignore
   const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, calcWidth, transformAnimation } = useCarousel({
-    numImages: imageUrls.length,
+    numImages: imageIds.length,
     imageWidth,
     imageGap
   });
@@ -26,9 +29,10 @@ const MiniCarousel = ({ imageUrls, clickHandler }: CarouselProps) => {
         </ScrollButton>
       )}
 
+      {/*prettier-ignore */}
       <Thumbnails {...transformAnimation}>
-        {imageUrls.map((url) => (
-          <Image key={url} src={url} onClick={() => clickHandler(url)} />
+        {imageIds.map((id) => (
+          <Image key={id} src={imageUrl`${id}`} onClick={() => clickHandler(id)} />
         ))}
       </Thumbnails>
 
@@ -63,6 +67,7 @@ const Image = styled("img")`
   width: ${imageWidth}px;
   height: ${imageHeight}px;
   flex-shrink: 0;
+  cursor: pointer;
 `;
 
 const ScrollButton = styled.button(
@@ -79,5 +84,6 @@ const ScrollButton = styled.button(
     color: white;
     border: none;
     font-size: 32px;
+    cursor: pointer;
   `
 );
