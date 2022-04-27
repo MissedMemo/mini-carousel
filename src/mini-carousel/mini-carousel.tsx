@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
+import { ReactComponent as LeftArrow } from "../assets/arrow-left.svg";
 import { ReactComponent as RightArrow } from "../assets/arrow-right.svg";
 
 const imageUrl = (s: TemplateStringsArray, id: string) =>
@@ -26,7 +27,7 @@ const MiniCarousel = ({ imageIds, clickHandler }: CarouselProps) => {
     <Carousel ref={calcWidth}>
       {canScrollLeft && (
         <ScrollButton direction="left" onClick={scrollLeft}>
-          {"<"}
+          <LeftArrow />
         </ScrollButton>
       )}
 
