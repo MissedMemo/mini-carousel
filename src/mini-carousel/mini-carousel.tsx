@@ -1,19 +1,24 @@
 import styled from "styled-components/macro";
 import { useCarousel } from "./useCarousel";
+import { ReactComponent as LeftArrow } from "../assets/arrow-left.svg";
+import { ReactComponent as RightArrow } from "../assets/arrow-right.svg";
+
+const imageUrl = (s: TemplateStringsArray, id: string) =>
+  `https://picsum.photos/id/${id}/500`;
 
 const imageWidth = 194;
 const imageHeight = 164;
 const imageGap = 2;
 
 type CarouselProps = {
-  imageUrls: string[];
+  imageIds: string[];
   clickHandler: (url: string) => void;
 };
 
-const MiniCarousel = ({ imageUrls, clickHandler }: CarouselProps) => {
+const MiniCarousel = ({ imageIds, clickHandler }: CarouselProps) => {
   // prettier-ignore
   const { canScrollLeft, scrollLeft, canScrollRight, scrollRight, calcWidth, transformAnimation } = useCarousel({
-    numImages: imageUrls.length,
+    numImages: imageIds.length,
     imageWidth,
     imageGap
   });
@@ -22,19 +27,20 @@ const MiniCarousel = ({ imageUrls, clickHandler }: CarouselProps) => {
     <Carousel ref={calcWidth}>
       {canScrollLeft && (
         <ScrollButton direction="left" onClick={scrollLeft}>
-          {"<"}
+          <LeftArrow />
         </ScrollButton>
       )}
 
+      {/*prettier-ignore */}
       <Thumbnails {...transformAnimation}>
-        {imageUrls.map((url) => (
-          <Image key={url} src={url} onClick={() => clickHandler(url)} />
+        {imageIds.map((id) => (
+          <Image key={id} src={imageUrl`${id}`} onClick={() => clickHandler(id)} />
         ))}
       </Thumbnails>
 
       {canScrollRight && (
         <ScrollButton direction="right" onClick={scrollRight}>
-          {">"}
+          <RightArrow />
         </ScrollButton>
       )}
     </Carousel>
@@ -63,6 +69,7 @@ const Image = styled("img")`
   width: ${imageWidth}px;
   height: ${imageHeight}px;
   flex-shrink: 0;
+  cursor: pointer;
 `;
 
 const ScrollButton = styled.button(
@@ -76,8 +83,7 @@ const ScrollButton = styled.button(
     width: 40px;
     background-color: black;
     opacity: 45%;
-    color: white;
     border: none;
-    font-size: 32px;
+    cursor: pointer;
   `
 );
