@@ -83,9 +83,7 @@ const ScrollButton = styled.button(
     width: 40px;
     background-color: black;
     opacity: 45%;
-    color: white;
     border: none;
-    font-size: 32px;
     cursor: pointer;
   `
 );

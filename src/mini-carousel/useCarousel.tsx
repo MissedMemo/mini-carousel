@@ -6,8 +6,7 @@ type Props = {
   imageGap: number;
 };
 
-// prettier-ignore
-export const useCarousel = ({ numImages, imageWidth, imageGap}: Props) => {
+export const useCarousel = ({ numImages, imageWidth, imageGap }: Props) => {
   const [offsetX, setOffsetX] = useState(0);
   const [clientWidth, setClientWidth] = useState(0);
   const refCarousel = useRef<HTMLDivElement | null>(null);
@@ -21,8 +20,8 @@ export const useCarousel = ({ numImages, imageWidth, imageGap}: Props) => {
     }
   };
 
-  const imagePanelWidth = numImages * imageWidth + (numImages -1) * imageGap;
-  const scrollAmount = clientWidth - imageWidth * 0.33; // maintain some of previous view (shows no images "skipped")
+  const imagePanelWidth = numImages * imageWidth + (numImages - 1) * imageGap;
+  const scrollAmount = clientWidth - imageWidth * 0.33; // maintain part of previous view to show no image "skipped"
   const maxOffset = -1 * (imagePanelWidth - clientWidth);
 
   const canScrollLeft = offsetX < 0;
